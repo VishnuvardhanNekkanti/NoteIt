@@ -120,7 +120,7 @@ function App() {
               </div>
               <div>
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
-                  NotesApp
+                  NoteIt
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
                   {notes.length} {notes.length === 1 ? 'note' : 'notes'}
