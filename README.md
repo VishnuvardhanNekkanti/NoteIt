@@ -2,7 +2,7 @@
 
 A beautiful, full-stack MERN notes app built with React, TypeScript, Vite, Tailwind CSS, and Express + MongoDB.
 
-![NoteIt UI](./public/notepad.svg)
+![NoteIt]
 
 ## Features
 
