@@ -22,18 +22,21 @@ A beautiful, full-stack MERN notes app built with React, TypeScript, Vite, Tailw
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js & npm
 - MongoDB (local or Atlas)
 
 ### Installation
 
 1. **Clone the repository:**
+
    ```sh
    git clone <your-repo-url>
    cd mern-notes-app
    ```
 
 2. **Install dependencies:**
+
    ```sh
    cd backend
    npm install
@@ -42,15 +45,18 @@ A beautiful, full-stack MERN notes app built with React, TypeScript, Vite, Tailw
    ```
 
 3. **Start MongoDB:**
+
    - Make sure MongoDB is running locally (`mongodb://localhost:27017/mern_notes`) or update the connection string in `backend/server.js`.
 
 4. **Run the backend:**
+
    ```sh
    cd backend
    npm start
    ```
 
 5. **Run the frontend:**
+
    ```sh
    cd ../project
    npm run dev
@@ -98,5 +104,3 @@ mern-notes-app/
 MIT
 
 ---
-
-
