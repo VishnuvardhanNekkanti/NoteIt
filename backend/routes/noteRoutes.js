@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 const Note = require('../models/Note');
 
+// Delete all notes
+router.delete('/', async (req, res) => {
+	try {
+		await Note.deleteMany({});
+		res.json({ message: 'All notes deleted' });
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
 
 // Create
 

@@ -102,8 +102,10 @@ function App() {
     linkElement.click();
   };
 
-  const handleClearAllNotes = () => {
+  const handleClearAllNotes = async () => {
     if (notes.length > 0 && window.confirm('Are you sure you want to delete all notes? This action cannot be undone.')) {
+      // Call backend to delete all notes
+      await fetch('http://localhost:5000/api/notes', { method: 'DELETE' });
       setNotes([]);
     }
   };
