@@ -16,6 +16,8 @@ function App() {
   // Modal state for delete confirmation
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [noteToDelete, setNoteToDelete] = useState<string | null>(null);
+  // Modal state for clear all confirmation
+  const [showClearAllModal, setShowClearAllModal] = useState(false);
 
   // Fetch notes from backend on mount
   useEffect(() => {
@@ -121,12 +123,21 @@ function App() {
     linkElement.click();
   };
 
-  const handleClearAllNotes = async () => {
-    if (notes.length > 0 && window.confirm('Are you sure you want to delete all notes? This action cannot be undone.')) {
-      // Call backend to delete all notes
-      await fetch('http://localhost:5000/api/notes', { method: 'DELETE' });
-      setNotes([]);
-    }
+  // Show clear all modal
+  const handleClearAllNotes = () => {
+    setShowClearAllModal(true);
+  };
+
+  // Confirm clear all
+  const confirmClearAllNotes = async () => {
+    await fetch('http://localhost:5000/api/notes', { method: 'DELETE' });
+    setNotes([]);
+    setShowClearAllModal(false);
+  };
+
+  // Cancel clear all
+  const cancelClearAllNotes = () => {
+    setShowClearAllModal(false);
   };
 
   return (
@@ -225,7 +236,12 @@ function App() {
         {showDeleteModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
             <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-blue-100 dark:border-gray-700 p-8 max-w-sm w-full mx-4 flex flex-col items-center">
-              <BookOpen className="w-10 h-10 text-blue-400 mb-4" />
+              <div className="relative mb-4 flex items-center justify-center" style={{height: '48px', width: '48px'}}>
+                <BookOpen className="w-10 h-10 text-red-500" />
+                <span style={{position: 'absolute', right: '-10px', bottom: '0'}}>
+                  <Trash2 className="w-4 h-4 text-red-500" />
+                </span>
+              </div>
               <h2 className="text-lg font-bold mb-2 text-gray-800 dark:text-gray-200">Delete Note?</h2>
               <p className="mb-6 text-gray-600 dark:text-gray-400 text-center">Are you sure you want to delete this note? This action cannot be undone.</p>
               <div className="flex gap-4 w-full justify-center">
@@ -237,6 +253,31 @@ function App() {
                 </button>
                 <button
                   onClick={cancelDeleteNote}
+                  className="px-6 py-2 bg-white/60 dark:bg-gray-800/60 rounded-xl text-gray-600 dark:text-gray-400 border border-blue-100 dark:border-gray-700 shadow transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Clear All Confirmation Modal */}
+        {showClearAllModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-blue-100 dark:border-gray-700 p-8 max-w-sm w-full mx-4 flex flex-col items-center">
+              <Trash2 className="w-10 h-10 text-red-400 mb-4" />
+              <h2 className="text-lg font-bold mb-2 text-gray-800 dark:text-gray-200">Delete All Notes?</h2>
+              <p className="mb-6 text-gray-600 dark:text-gray-400 text-center">Are you sure you want to delete <b>all</b> notes? This action cannot be undone.</p>
+              <div className="flex gap-4 w-full justify-center">
+                <button
+                  onClick={confirmClearAllNotes}
+                  className="px-6 py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl font-semibold shadow hover:scale-105 hover:shadow-lg transition-all duration-200"
+                >
+                  Delete All
+                </button>
+                <button
+                  onClick={cancelClearAllNotes}
                   className="px-6 py-2 bg-white/60 dark:bg-gray-800/60 rounded-xl text-gray-600 dark:text-gray-400 border border-blue-100 dark:border-gray-700 shadow transition-all duration-200 hover:scale-105 hover:shadow-lg"
                 >
                   Cancel
